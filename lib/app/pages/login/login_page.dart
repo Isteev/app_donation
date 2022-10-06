@@ -1,3 +1,4 @@
+import 'package:adoption_app/app/pages/login/login_controller.dart';
 import 'package:adoption_app/app/routes/app_pages.dart';
 import 'package:adoption_app/app/widgets/custom_button.dart';
 import 'package:adoption_app/app/widgets/custom_input.dart';
@@ -14,40 +15,46 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 100).r,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              200.verticalSpace,
-              Text('logo'),
-              300.verticalSpace,
-              CustomInput(
-                placeholder: "Correo",
-                onChage: (val) => {},
-              ),
-              20.verticalSpace,
-              CustomInput(
-                placeholder: "Contraseña",
-                onChage: (val) => {},
-              ),
-              const Spacer(),
-              CustomButton(
-                label: 'Iniciar Sesion',
-                onTap: () {
-                  Get.offNamed(AppRoutes.home);
-                },
-              ),
-              20.verticalSpace,
-              CustomButton(
-                label: 'Registrarse',
-                textColor: Colors.black,
-                backGround: Colors.grey.withOpacity(0.2),
-                onTap: () {
-                  Get.offNamed(AppRoutes.register);
-                },
-              ),
-              100.verticalSpace,
-            ],
-          ),
+          child: GetBuilder<LoginController>(builder: (_) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                200.verticalSpace,
+                Text('logo'),
+                300.verticalSpace,
+                CustomInput(
+                  placeholder: "Correo",
+                  onChage: (val) {
+                    _.email = val;
+                  },
+                ),
+                20.verticalSpace,
+                CustomInput(
+                  placeholder: "Contraseña",
+                  onChage: (val) {
+                    _.pass = val;
+                  },
+                ),
+                const Spacer(),
+                CustomButton(
+                  label: 'Iniciar Sesion',
+                  onTap: () {
+                    _.login();
+                  },
+                ),
+                20.verticalSpace,
+                CustomButton(
+                  label: 'Registrarse',
+                  textColor: Colors.black,
+                  backGround: Colors.grey.withOpacity(0.2),
+                  onTap: () {
+                    Get.toNamed(AppRoutes.register);
+                  },
+                ),
+                100.verticalSpace,
+              ],
+            );
+          }),
         ),
       ),
     );

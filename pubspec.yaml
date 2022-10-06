@@ -16,6 +16,8 @@ dependencies:
   get: ^4.6.5
   flutter_screenutil: ^5.5.4
   flutter_svg: ^1.1.5
+  dio: ^4.0.6
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -34,6 +36,7 @@ flutter:
     - assets/
     - assets/icons/
     - assets/images/
+    - .env
 
   #   - images/a_dot_ham.jpeg
 
