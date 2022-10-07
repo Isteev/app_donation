@@ -34,6 +34,7 @@ class LoginPage extends StatelessWidget {
                   onChage: (val) {
                     _.pass = val;
                   },
+                  pass: true,
                 ),
                 const Spacer(),
                 CustomButton(

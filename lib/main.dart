@@ -1,3 +1,5 @@
+import 'package:adoption_app/app/core/global/global_controller.dart';
+import 'package:adoption_app/app/pages/splash/splash_bindings.dart';
 import 'package:adoption_app/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -18,10 +20,12 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
         designSize: const Size(1080, 1920),
         builder: (_, __) {
+          GlobalController globalController = Get.put(GlobalController());
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             getPages: AppPages.pages,
-            initialRoute: AppRoutes.login,
+            initialRoute: AppRoutes.spalsh,
+            initialBinding: SplashBindigs(),
           );
         });
   }

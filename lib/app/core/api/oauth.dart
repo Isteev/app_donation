@@ -1,3 +1,4 @@
+import 'package:adoption_app/app/core/models/document_type_model.dart';
 import 'package:adoption_app/app/core/models/response_model.dart';
 import 'package:adoption_app/app/core/models/user_model.dart';
 import 'package:dio/dio.dart';
@@ -33,6 +34,18 @@ class OauthService {
       } 
 
       return ResponseModel(message: response.data['message'], error: true);
+
+    } catch (e) {
+      return ResponseModel(error: true, message: e.toString());
+    }
+  }
+
+  Future<ResponseModel<List<DocumentTypeModel>>> getDocumentType() async {
+    try {
+      Response response = await Dio().get("${dotenv.env['PETS_URL_API']}/document-types");
+
+      return ResponseModel(
+            message: "success", result: (response.data as List).map((e) => DocumentTypeModel.fromJson(e)).toList());
 
     } catch (e) {
       return ResponseModel(error: true, message: e.toString());
