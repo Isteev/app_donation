@@ -59,7 +59,7 @@ class RegisterController extends GetxController {
       return;
     }
 
-    Get.offAllNamed(AppRoutes.home);
+    Get.offAllNamed(AppRoutes.main);
   }
 
   getLocalities(int id) {

@@ -25,6 +25,6 @@ class LoginController extends GetxController {
       return;
     }
 
-    Get.offAllNamed(AppRoutes.home);
+    Get.offAllNamed(AppRoutes.main);
   }
 }

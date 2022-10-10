@@ -1,5 +1,7 @@
+import 'package:adoption_app/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({
@@ -31,9 +33,17 @@ class NavBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Text('home'),
-          Text('profile'),
+          GestureDetector(
+              onTap: () {
+                Get.toNamed(AppRoutes.home, id: 12);
+              },
+              child: Text('home')),
           Text('pets'),
+          GestureDetector(
+              onTap: () {
+                Get.toNamed(AppRoutes.profile, id: 12);
+              },
+              child: Text('profile')),
         ],
       ),
     );

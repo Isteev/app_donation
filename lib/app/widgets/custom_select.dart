@@ -9,7 +9,8 @@ class CustomSelect extends StatelessWidget {
       required this.placeholder,
       this.width,
       this.modalTitle = "Seleccione una",
-      required this.items, required this.onSelected})
+      required this.items,
+      required this.onSelected})
       : super(key: key);
 
   final String placeholder;
@@ -49,9 +50,9 @@ class CustomSelect extends StatelessWidget {
                   selected.value != "" ? selected.value : placeholder,
                   style: TextStyle(
                       fontSize: 40.r,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w400,
                       color: selected.value != ""
-                          ? Colors.black
+                          ? const Color.fromRGBO(16, 16, 16, 1)
                           : const Color.fromRGBO(205, 205, 207, 1)),
                   maxLines: 1,
                 ),
@@ -107,51 +108,61 @@ class CustomSelectSheet extends StatelessWidget {
           ),
           20.verticalSpace,
           Expanded(
-            child: items.isNotEmpty?  SingleChildScrollView(
-            child: Obx(() {
-              return Column(
-                children: items
-                    .map((e) => GestureDetector(
-                          onTap: () {
-                            selected.value = e.value;
-                            onSelected(e.id);
-                            Future.delayed(const Duration(milliseconds: 150),
-                                () => Get.back());
-                          },
-                          child: Container(
-                              width: 400.r,
-                              decoration: BoxDecoration(
-                                  color: selected.value == e.value
-                                      ? const Color(0xFF33e3ff).withOpacity(0.2)
-                                      : Colors.white,
-                                  border: Border.all(
-                                    color: Colors.black12,
-                                  ),
-                                  borderRadius: BorderRadius.circular(30).r),
-                              padding: const EdgeInsets.symmetric(
-                                      vertical: 20, horizontal: 100)
-                                  .r,
-                              margin:
-                                  const EdgeInsets.symmetric(vertical: 10).r,
-                              alignment: Alignment.center,
-                              child: Text(
-                                e.value,
-                                style: TextStyle(
-                                    color: selected.value == e.value
-                                        ? Colors.black
-                                        : const Color.fromRGBO(
-                                            205, 205, 207, 1),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 40.r),
-                              )),
-                        ))
-                    .toList(),
-              );
-            }),
-          ):  Align(
-            alignment: Alignment.center,
-            child: Text("No hay Datos", style: TextStyle(fontSize: 50.w),),
-          )) 
+              child: items.isNotEmpty
+                  ? SingleChildScrollView(
+                      child: Obx(() {
+                        return Column(
+                          children: items
+                              .map((e) => GestureDetector(
+                                    onTap: () {
+                                      selected.value = e.value;
+                                      onSelected(e.id);
+                                      Future.delayed(
+                                          const Duration(milliseconds: 150),
+                                          () => Get.back());
+                                    },
+                                    child: Container(
+                                        width: 400.r,
+                                        decoration: BoxDecoration(
+                                            color: selected.value == e.value
+                                                ? const Color(0xFF33e3ff)
+                                                    .withOpacity(0.2)
+                                                : Colors.white,
+                                            border: Border.all(
+                                              color: Colors.black12,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(30).r),
+                                        padding: const EdgeInsets.symmetric(
+                                                vertical: 20, horizontal: 50)
+                                            .r,
+                                        margin: const EdgeInsets.symmetric(
+                                                vertical: 10)
+                                            .r,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          e.value,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: selected.value == e.value
+                                                  ? Colors.black
+                                                  : const Color.fromRGBO(
+                                                      205, 205, 207, 1),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 40.r),
+                                        )),
+                                  ))
+                              .toList(),
+                        );
+                      }),
+                    )
+                  : Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "No hay Datos",
+                        style: TextStyle(fontSize: 50.w),
+                      ),
+                    ))
         ],
       ),
     );

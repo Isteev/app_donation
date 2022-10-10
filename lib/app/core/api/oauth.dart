@@ -9,17 +9,21 @@ class OauthService {
 
   Future<ResponseModel<UserModel>> register(user, pass) async {
     try {
-      Response response = await Dio().post("$path/signup", data: {...user, "password": pass});
+      Response response =
+          await Dio().post("$path/signup", data: {...user, "password": pass});
 
-      if(response.data['status'] == "dudoso") {
-        return ResponseModel(
-          error: true,
-          message: response.data['message']);
+      if (response.data['status'] == "dudoso") {
+        return ResponseModel(error: true, message: response.data['message']);
       }
 
       return ResponseModel(
-          message: "success", result: UserModel.fromJson(response.data['data']));
-    } catch (e) {
+          message: "success",
+          result: UserModel.fromJson(response.data['data']));
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        return ResponseModel(error: true, message: "Este usuario ya existe");
+      }
+
       return ResponseModel(error: true, message: e.toString());
     }
   }
@@ -30,11 +34,11 @@ class OauthService {
 
       if (response.data['status'] == "percho") {
         return ResponseModel(
-            message: "success", result: UserModel.fromJson(response.data['data']));
-      } 
+            message: "success",
+            result: UserModel.fromJson(response.data['data']));
+      }
 
       return ResponseModel(message: response.data['message'], error: true);
-
     } catch (e) {
       return ResponseModel(error: true, message: e.toString());
     }
@@ -42,11 +46,14 @@ class OauthService {
 
   Future<ResponseModel<List<DocumentTypeModel>>> getDocumentType() async {
     try {
-      Response response = await Dio().get("${dotenv.env['PETS_URL_API']}/document-types");
+      Response response =
+          await Dio().get("${dotenv.env['PETS_URL_API']}/document-types");
 
       return ResponseModel(
-            message: "success", result: (response.data as List).map((e) => DocumentTypeModel.fromJson(e)).toList());
-
+          message: "success",
+          result: (response.data['data'] as List)
+              .map((e) => DocumentTypeModel.fromJson(e))
+              .toList());
     } catch (e) {
       return ResponseModel(error: true, message: e.toString());
     }

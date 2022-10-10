@@ -1,11 +1,17 @@
+import 'package:adoption_app/app/core/global/global_controller.dart';
+import 'package:adoption_app/app/core/models/pet_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class PetsItem extends StatelessWidget {
   const PetsItem({
     Key? key,
+    required this.pet,
   }) : super(key: key);
+
+  final PetModel pet;
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +37,14 @@ class PetsItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Carla marcela',
+                    pet.name,
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w500,
                         fontSize: 38.r),
                   ),
                   Text(
-                    '5 mnt',
+                    getBreed(pet.breedId),
                     style: TextStyle(
                         color: const Color(0xFF888687), fontSize: 30.r),
                   ),
@@ -61,5 +67,12 @@ class PetsItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  getBreed(idBreed) {
+    GlobalController globalController = Get.find();
+    return globalController.breeds
+        .firstWhere((element) => element.id == idBreed.toString())
+        .name;
   }
 }

@@ -1,6 +1,6 @@
 import 'package:adoption_app/app/pages/register/register_controller.dart';
-import 'package:adoption_app/app/routes/app_pages.dart';
 import 'package:adoption_app/app/widgets/custom_button.dart';
+import 'package:adoption_app/app/widgets/custom_icon.dart';
 import 'package:adoption_app/app/widgets/custom_input.dart';
 import 'package:adoption_app/app/widgets/custom_select.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +20,8 @@ class RegisterPage extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              20.verticalSpace,
+              const CustomIcon(),
               const Spacer(),
               Text(
                 "Registrate",
@@ -79,15 +81,15 @@ class RegisterPage extends StatelessWidget {
                   )),
                   20.horizontalSpace,
                   GetBuilder<RegisterController>(
-                    id: "localities",
-                    builder: (_) {
-                    return Expanded(
-                        child: CustomSelect(
-                      items: _.itemsLoaclities,
-                      placeholder: "Localidad",
-                      onSelected: (val) {},
-                    ));
-                  })
+                      id: "localities",
+                      builder: (_) {
+                        return Expanded(
+                            child: CustomSelect(
+                          items: _.itemsLoaclities,
+                          placeholder: "Localidad",
+                          onSelected: (val) {},
+                        ));
+                      })
                 ],
               ),
               20.verticalSpace,

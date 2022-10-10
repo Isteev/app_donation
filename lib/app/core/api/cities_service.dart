@@ -13,7 +13,7 @@ class CitiesService {
 
       return ResponseModel(
           message: "percho",
-          result: (response.data as List)
+          result: (response.data['data'] as List)
               .map((e) => CitiesModel.fromJson(e))
               .toList());
     } catch (e) {
@@ -27,7 +27,7 @@ class CitiesService {
 
       return ResponseModel(
           message: "percho",
-          result: (response.data as List)
+          result: (response.data['data'] as List)
               .map((e) => LoaclitiesModel.fromJson(e))
               .toList());
     } catch (e) {
