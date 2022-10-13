@@ -2,9 +2,10 @@ import 'package:adoption_app/app/core/api/pets_service.dart';
 import 'package:adoption_app/app/core/global/global_controller.dart';
 import 'package:adoption_app/app/core/models/pet_model.dart';
 import 'package:adoption_app/app/core/models/response_model.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 
 class HomeController extends GetxController {
+  GlobalController globalController = Get.find();
   PetsServices petsServices = PetsServices();
 
   List<PetModel> pets = [];

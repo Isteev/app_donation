@@ -1,10 +1,10 @@
 import 'package:adoption_app/app/pages/home/home_controller.dart';
 import 'package:adoption_app/app/pages/home/widgets/home_header.dart';
 import 'package:adoption_app/app/pages/home/widgets/home_list_filter.dart';
-import 'package:adoption_app/app/widgets/nav_bar.dart';
 import 'package:adoption_app/app/widgets/pet_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class HomePage extends StatelessWidget {

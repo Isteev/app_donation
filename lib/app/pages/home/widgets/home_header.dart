@@ -1,3 +1,4 @@
+import 'package:adoption_app/app/core/form/form_model.dart';
 import 'package:adoption_app/app/widgets/custom_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,6 +41,7 @@ class HomeHeader extends StatelessWidget {
           20.verticalSpace,
           CustomInput(
             placeholder: "Busca tu mascota",
+            form: FormModel(value: "", validators: []),
             onChage: (val) => {},
             borderRadius: BorderRadius.circular(50).r,
             suffix: Padding(

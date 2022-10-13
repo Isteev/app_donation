@@ -1,9 +1,11 @@
 import 'package:adoption_app/app/core/api/pets_service.dart';
+import 'package:adoption_app/app/core/form/form_control.dart';
+import 'package:adoption_app/app/core/form/form_model.dart';
+import 'package:adoption_app/app/core/form/form_validators.dart';
 import 'package:adoption_app/app/core/global/global_controller.dart';
-import 'package:adoption_app/app/core/models/pet_model.dart';
+import 'package:adoption_app/app/core/models/response_model.dart';
 import 'package:adoption_app/app/core/models/select_model.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/instance_manager.dart';
+import 'package:get/get.dart';
 
 class FormPetsController extends GetxController {
   GlobalController globalController = Get.find();
@@ -16,11 +18,16 @@ class FormPetsController extends GetxController {
 
   List<SelectModel> breeds = [];
 
-  String name = "";
-  String age = "";
-  String gender = "";
-  String breed = "";
-  String petType = "";
+  FormControl petsForm = FormControl(form: {
+    'name': FormModel(value: "", validators: [FormValidators().isRequired]),
+    'age': FormModel(value: "", validators: [FormValidators().isRequired]),
+    'gender': FormModel(value: "", validators: [FormValidators().isRequired]),
+    'weight': FormModel(value: "10", validators: [FormValidators().isRequired]),
+    'breed_id': FormModel(value: "", validators: [FormValidators().isRequired]),
+    'user_id': FormModel(value: "", validators: []),
+    'pet_type_id':
+        FormModel(value: "", validators: [FormValidators().isRequired]),
+  });
 
   @override
   void onInit() {
@@ -59,15 +66,17 @@ class FormPetsController extends GetxController {
   }
 
   createPet() async {
-    PetModel pet = PetModel(
-        name: name,
-        age: int.parse(age),
-        gender: gender,
-        weight: 10,
-        breedId: int.parse(breed),
-        userId: 1,
-        petTypeId: int.parse(petType));
+    petsForm.form["user_id"]!.value =
+        globalController.user.getAt(0)!.id.toString();
+    if (petsForm.validate()) {
+      ResponseModel response = await petsServices.createPet(petsForm.getValues());
 
-    await petsServices.createPet(pet.toJson());
+      if (response.error) {
+        Get.snackbar('error', response.message!);
+        return;
+      }
+
+      print(response.result);
+    }
   }
 }

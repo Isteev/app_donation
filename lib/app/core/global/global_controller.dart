@@ -7,12 +7,16 @@ import 'package:adoption_app/app/core/models/document_type_model.dart';
 import 'package:adoption_app/app/core/models/localities_model.dart';
 import 'package:adoption_app/app/core/models/pets_type_model.dart';
 import 'package:adoption_app/app/core/models/response_model.dart';
+import 'package:adoption_app/app/core/models/user_model.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class GlobalController extends GetxController {
   OauthService oauthService = OauthService();
   CitiesService citiesService = CitiesService();
   PetsServices petsServices = PetsServices();
+
+  Box<UserModel> user = Hive.box<UserModel>('user');
 
   List<DocumentTypeModel> docTypes = [];
   List<CitiesModel> cities = [];

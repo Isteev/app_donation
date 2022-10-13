@@ -1,3 +1,4 @@
+
 import 'package:adoption_app/app/core/models/breeds_model.dart';
 import 'package:adoption_app/app/core/models/pet_model.dart';
 import 'package:adoption_app/app/core/models/pets_type_model.dart';
@@ -37,8 +38,15 @@ class PetsServices {
   }
 
   Future<ResponseModel<List<BreedsModel>>> createPet(data) async {
+    FormData form =  FormData.fromMap(data);
+
     try {
-      Response response = await Dio().post("$path/pets/newPet", data: data);
+      Response response = await Dio().post("$path/pets/new-pet", data: form);
+
+      if (response.data['status'] == "dudoso") {
+        return ResponseModel(
+            error: true, message: response.data['message'].toString());
+      }
 
       return ResponseModel(
           message: "percho",

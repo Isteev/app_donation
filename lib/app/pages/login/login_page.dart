@@ -2,6 +2,7 @@ import 'package:adoption_app/app/pages/login/login_controller.dart';
 import 'package:adoption_app/app/routes/app_pages.dart';
 import 'package:adoption_app/app/widgets/custom_button.dart';
 import 'package:adoption_app/app/widgets/custom_input.dart';
+import 'package:adoption_app/app/widgets/form_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -20,21 +21,30 @@ class LoginPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 200.verticalSpace,
-                Text('logo'),
+                const Text('logo'),
                 300.verticalSpace,
-                CustomInput(
-                  placeholder: "Correo",
-                  onChage: (val) {
-                    _.email = val;
+                FormBuilder(
+                  formControl: _.loginForm,
+                  builder: (form) {
+                    return Column(
+                      children: [
+                        CustomInput(
+                          placeholder: "Correo",
+                          form: form['email'],
+                          onChage: (val) {
+                          },
+                        ),
+                        20.verticalSpace,
+                        CustomInput(
+                          placeholder: "Contraseña",
+                          form: form['password'],
+                          onChage: (val) {
+                          },
+                          pass: true,
+                        ),
+                      ],
+                    );
                   },
-                ),
-                20.verticalSpace,
-                CustomInput(
-                  placeholder: "Contraseña",
-                  onChage: (val) {
-                    _.pass = val;
-                  },
-                  pass: true,
                 ),
                 const Spacer(),
                 CustomButton(

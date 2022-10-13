@@ -1,3 +1,4 @@
+import 'package:adoption_app/app/core/form/form_model.dart';
 import 'package:adoption_app/app/core/models/select_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,9 +11,11 @@ class CustomSelect extends StatelessWidget {
       this.width,
       this.modalTitle = "Seleccione una",
       required this.items,
-      required this.onSelected})
+      required this.onSelected,
+      this.form})
       : super(key: key);
 
+  final FormModel? form;
   final String placeholder;
   final String modalTitle;
   final List<SelectModel> items;
@@ -21,7 +24,7 @@ class CustomSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RxString selected = "".obs;
+    RxString selected = items.firstWhere((e) => e.id == form!.value, orElse: () => SelectModel(id: "", value: "")).value.obs;
 
     return GestureDetector(
       onTap: () {
@@ -29,7 +32,10 @@ class CustomSelect extends StatelessWidget {
           modalTitle: modalTitle,
           items: items,
           selected: selected,
-          onSelected: onSelected,
+          onSelected: (val) {
+            onSelected(val);
+            form!.value = val;
+          },
         ));
       },
       child: Container(
@@ -38,7 +44,10 @@ class CustomSelect extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30).r,
             color: Colors.white,
-            border: Border.all(color: Colors.black12)),
+            border: Border.all(
+                color: form!.error.isNotEmpty
+                    ? Colors.red[200]!
+                    : Colors.black12)),
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20).r,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -7,10 +7,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class OauthService {
   String path = "${dotenv.env['PETS_URL_API']}/oauth";
 
-  Future<ResponseModel<UserModel>> register(user, pass) async {
+  Future<ResponseModel<UserModel>> register(user) async {
     try {
       Response response =
-          await Dio().post("$path/signup", data: {...user, "password": pass});
+          await Dio().post("$path/signup", data: user);
 
       if (response.data['status'] == "dudoso") {
         return ResponseModel(error: true, message: response.data['message']);
