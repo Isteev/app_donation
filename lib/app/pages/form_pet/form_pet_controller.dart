@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:adoption_app/app/core/api/pets_service.dart';
 import 'package:adoption_app/app/core/form/form_control.dart';
 import 'package:adoption_app/app/core/form/form_model.dart';
@@ -5,7 +8,10 @@ import 'package:adoption_app/app/core/form/form_validators.dart';
 import 'package:adoption_app/app/core/global/global_controller.dart';
 import 'package:adoption_app/app/core/models/response_model.dart';
 import 'package:adoption_app/app/core/models/select_model.dart';
+import 'package:adoption_app/app/routes/app_pages.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class FormPetsController extends GetxController {
   GlobalController globalController = Get.find();
@@ -17,6 +23,7 @@ class FormPetsController extends GetxController {
   late List<SelectModel> ageSelect;
 
   List<SelectModel> breeds = [];
+  RxList images = [].obs;
 
   FormControl petsForm = FormControl(form: {
     'name': FormModel(value: "", validators: [FormValidators().isRequired]),
@@ -68,15 +75,37 @@ class FormPetsController extends GetxController {
   createPet() async {
     petsForm.form["user_id"]!.value =
         globalController.user.getAt(0)!.id.toString();
-    if (petsForm.validate()) {
-      ResponseModel response = await petsServices.createPet(petsForm.getValues());
+    if (petsForm.validate() && images.isNotEmpty) {
+      List<dio.MultipartFile> petImages = [];
+
+      for (var element in images) {
+        petImages.add(await dio.MultipartFile.fromFile(element.path,
+            filename: element.path.split('/').last));
+      }
+
+      ResponseModel response =
+          await petsServices.createPet(petImages, petsForm.getValues());
 
       if (response.error) {
         Get.snackbar('error', response.message!);
         return;
       }
 
-      print(response.result);
+      Get.offAllNamed(AppRoutes.main);
+    }
+  }
+
+  imagePiker() async {
+    final List<XFile> image = await ImagePicker().pickMultiImage();
+
+    if (image.isNotEmpty) {
+      List allImage = [];
+      image.forEach((element) {
+        File file = File(element.path);
+        allImage.add(file);
+      });
+
+      images.addAll(allImage);
     }
   }
 }

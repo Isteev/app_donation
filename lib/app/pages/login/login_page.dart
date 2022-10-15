@@ -30,14 +30,14 @@ class LoginPage extends StatelessWidget {
                       children: [
                         CustomInput(
                           placeholder: "Correo",
-                          form: form['email'],
+                          form: form['email']!,
                           onChage: (val) {
                           },
                         ),
                         20.verticalSpace,
                         CustomInput(
                           placeholder: "Contraseña",
-                          form: form['password'],
+                          form: form['password']!,
                           onChage: (val) {
                           },
                           pass: true,

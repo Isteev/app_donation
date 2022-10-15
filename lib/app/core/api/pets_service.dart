@@ -37,8 +37,13 @@ class PetsServices {
     }
   }
 
-  Future<ResponseModel<List<BreedsModel>>> createPet(data) async {
-    FormData form =  FormData.fromMap(data);
+  Future<ResponseModel<PetModel>> createPet( images, data) async {
+    FormData form =  FormData.fromMap(
+      {
+        "images": images,
+        ...data
+      }
+    );
 
     try {
       Response response = await Dio().post("$path/pets/new-pet", data: form);
@@ -50,9 +55,7 @@ class PetsServices {
 
       return ResponseModel(
           message: "percho",
-          result: (response.data['data'] as List)
-              .map((e) => BreedsModel.fromJson(e))
-              .toList());
+          result: PetModel.fromJson(response.data['data']));
     } catch (e) {
       return ResponseModel(error: true, message: e.toString());
     }
@@ -60,7 +63,7 @@ class PetsServices {
 
   Future<ResponseModel<List<PetModel>>> getPets() async {
     try {
-      Response response = await Dio().get("$path/pets");
+      Response response = await Dio().post("$path/pets");
 
       return ResponseModel(
           message: "percho",

@@ -22,7 +22,7 @@ class PetModel {
 
   int? id;
   String name;
-  int age;
+  String age;
   String gender;
   int weight;
   int breedId;
@@ -32,12 +32,12 @@ class PetModel {
   factory PetModel.fromJson(Map<String, dynamic> json) => PetModel(
         id: json["id"],
         name: json["name"],
-        age: json["age"],
+        age: json["age"].toString(),
         gender: json["gender"],
-        weight: json["weight"],
-        breedId: json["breed_id"],
-        userId: json["user_id"],
-        petTypeId: json["pet_type_id"],
+        weight: int.parse(json["weight"].toString()),
+        breedId: int.parse(json["breed_id"].toString()),
+        userId: int.parse(json["user_id"].toString()),
+        petTypeId: int.parse(json["pet_type_id"].toString()),
       );
 
   Map<String, dynamic> toJson() => {

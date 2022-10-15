@@ -41,13 +41,13 @@ class RegisterPage extends StatelessWidget {
                           children: [
                             CustomInput(
                                 placeholder: "Nombres",
-                                form: form['first_name'],
+                                form: form['first_name']!,
                                 onChage: (val) {
                                 }),
                             20.verticalSpace,
                             CustomInput(
                                 placeholder: "Apellidos",
-                                form: form['last_name'],
+                                form: form['last_name']!,
                                 onChage: (val) {
                                 }),
                             20.verticalSpace,
@@ -64,7 +64,7 @@ class RegisterPage extends StatelessWidget {
                                 Expanded(
                                   child: CustomInput(
                                       placeholder: "N° documento",
-                                      form: form['document_number'],
+                                      form: form['document_number']!,
                                       onChage: (val) {
                                       }),
                                 ),
@@ -73,7 +73,7 @@ class RegisterPage extends StatelessWidget {
                             20.verticalSpace,
                             CustomInput(
                                 placeholder: "Correo",
-                                form: form['email'],
+                                form: form['email']!,
                                 onChage: (val) {
                                 }),
                             20.verticalSpace,
@@ -105,7 +105,7 @@ class RegisterPage extends StatelessWidget {
                             20.verticalSpace,
                             CustomInput(
                               placeholder: "Contraseña",
-                              form: form['password'],
+                              form: form['password']!,
                               onChage: (val) {
                               },
                               pass: true,
@@ -113,7 +113,7 @@ class RegisterPage extends StatelessWidget {
                             20.verticalSpace,
                             CustomInput(
                               placeholder: "Validar contraseña",
-                              form: form['password2'],
+                              form: form['password2']!,
                               onChage: (val) {
                               },
                               pass: true,

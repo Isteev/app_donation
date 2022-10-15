@@ -32,7 +32,9 @@ class FormPets extends StatelessWidget {
                       fontSize: 70.r,
                       fontWeight: FontWeight.w600),
                 ),
-                70.verticalSpace,
+                50.verticalSpace,
+                AddImagesFormPet(controller: _,),
+                40.verticalSpace,
                 FormBuilder(
                     formControl: _.petsForm,
                     builder: (form) {
@@ -40,7 +42,7 @@ class FormPets extends StatelessWidget {
                         children: [
                           CustomInput(
                               placeholder: "nombre",
-                              form: form['name'],
+                              form: form['name']!,
                               onChage: (val) {}),
                           20.verticalSpace,
                           Row(
@@ -101,6 +103,88 @@ class FormPets extends StatelessWidget {
               ],
             );
           }),
+        ),
+      ),
+    );
+  }
+}
+
+class AddImagesFormPet extends StatelessWidget {
+  const AddImagesFormPet({
+    Key? key, required this.controller,
+  }) : super(key: key);
+
+  final FormPetsController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20).r,
+        child: Row(
+          children: [
+            Obx(() {
+              return Row(
+                children: controller.images
+                    .map((image) => Container(
+                          height: 450.r,
+                          width: 350.r,
+                          margin: const EdgeInsets.only(
+                                  right: 35, top: 20, bottom: 20)
+                              .r,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30).r,
+                              border:
+                                  Border.all(color: Colors.white, width: 15.r),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.black12,
+                                    offset: Offset(0, 0),
+                                    spreadRadius: 1,
+                                    blurRadius: 5),
+                                BoxShadow(
+                                    color: Color(0xFFf9f9f9),
+                                    offset: Offset(0, 30),
+                                    spreadRadius: 1,
+                                    blurRadius: 20),
+                              ]),
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(30).r,
+                              child: Image.file(
+                                image,
+                                fit: BoxFit.cover,
+                                frameBuilder: (context, child, frame,
+                                    wasSynchronouslyLoaded) {
+                                  if (frame == null) {
+                                    return Container(
+                                        color: Colors.white,
+                                        alignment: Alignment.center,
+                                        child:
+                                            const CircularProgressIndicator());
+                                  }
+                                  return child;
+                                },
+                              )),
+                        ))
+                    .toList(),
+              );
+            }),
+            GestureDetector(
+              onTap: () {
+                controller.imagePiker();
+              },
+              child: Container(
+                height: 450.r,
+                width: 350.r,
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(30).r),
+                alignment: Alignment.center,
+                child: Text("agregar imagen"),
+              ),
+            ),
+          ],
         ),
       ),
     );

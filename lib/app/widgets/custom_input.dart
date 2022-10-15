@@ -9,8 +9,8 @@ class CustomInput extends StatelessWidget {
   const CustomInput(
       {Key? key,
       required this.placeholder,
-      required this.onChage,
-      this.form,
+      this.onChage,
+      required this.form,
       this.suffix,
       this.borderRadius,
       this.pass = false,
@@ -18,8 +18,8 @@ class CustomInput extends StatelessWidget {
       : super(key: key);
 
   final String placeholder;
-  final FormModel? form;
-  final Function(String) onChage;
+  final FormModel form;
+  final Function(String)? onChage;
   final BorderRadius? borderRadius;
   final Widget? suffix;
   final bool pass;
@@ -36,14 +36,14 @@ class CustomInput extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: borderRadius ?? BorderRadius.circular(30).r,
               color: Colors.white,
-              border: form!.error.isNotEmpty
+              border: form.error.isNotEmpty
                   ? Border.all(color: Colors.red[200]!)
                   : Border.all(color: Colors.black12)),
           padding: const EdgeInsets.all(30).r,
           placeholder: placeholder,
           onChanged: (val) {
-            onChage(val);
-            form!.value = val;
+            onChage != null ? onChage!(val): null;
+            form.value = val;
           },
 
           //extra
