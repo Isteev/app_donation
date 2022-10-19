@@ -1,5 +1,7 @@
 import 'package:adoption_app/app/core/global/global_controller.dart';
 import 'package:adoption_app/app/core/models/pet_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -54,16 +56,19 @@ class PetsItem extends StatelessWidget {
             ],
           ),
           20.verticalSpace,
-          Container(
-              width: double.infinity,
-              height: 600.r,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
-                  "assets/images/pet.jpg",
-                  fit: BoxFit.cover,
-                ),
-              ))
+          CarouselSlider(
+              items: pet.petImages.map((e) {
+                return ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: CachedNetworkImage(
+                      imageUrl: e.url,
+                      fit: BoxFit.cover,
+                    ));
+              }).toList(),
+              options: CarouselOptions(
+                  height: 600.r,
+                  viewportFraction: 1,
+                  enableInfiniteScroll: false))
         ],
       ),
     );
