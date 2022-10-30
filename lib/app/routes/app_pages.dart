@@ -5,6 +5,8 @@ import 'package:adoption_app/app/pages/home/home_page.dart';
 import 'package:adoption_app/app/pages/login/login_bindings.dart';
 import 'package:adoption_app/app/pages/login/login_page.dart';
 import 'package:adoption_app/app/pages/main/main.dart';
+import 'package:adoption_app/app/pages/pet_page/pet_bindings.dart';
+import 'package:adoption_app/app/pages/pet_page/pet_page.dart';
 import 'package:adoption_app/app/pages/profile/profile_bindings.dart';
 import 'package:adoption_app/app/pages/profile/profile_page.dart';
 import 'package:adoption_app/app/pages/register/register_bindings.dart';
@@ -57,6 +59,13 @@ abstract class AppPages {
             settings: route,
             page: () => const ProfilePage(),
             binding: ProfileBindigs());
+
+      case AppRoutes.pet:
+        return GetPageRoute(
+            routeName: AppRoutes.pet,
+            settings: route,
+            page: () => const PetPage(),
+            binding: PetBindigs());
 
       default:
         return GetPageRoute(

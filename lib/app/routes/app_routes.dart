@@ -8,4 +8,5 @@ abstract class AppRoutes {
   static const home = '/home';
   static const profile = '/profile';
   static const formPets = '/form_pets';
+  static const pet = '/pet';
 }

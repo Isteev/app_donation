@@ -1,4 +1,3 @@
-
 import 'package:adoption_app/app/core/models/breeds_model.dart';
 import 'package:adoption_app/app/core/models/pet_model.dart';
 import 'package:adoption_app/app/core/models/pets_type_model.dart';
@@ -37,13 +36,8 @@ class PetsServices {
     }
   }
 
-  Future<ResponseModel<PetModel>> createPet( images, data) async {
-    FormData form =  FormData.fromMap(
-      {
-        "images": images,
-        ...data
-      }
-    );
+  Future<ResponseModel<PetModel>> createPet(images, data) async {
+    FormData form = FormData.fromMap({"images": images, ...data});
 
     try {
       Response response = await Dio().post("$path/pets/new-pet", data: form);
@@ -54,23 +48,33 @@ class PetsServices {
       }
 
       return ResponseModel(
-          message: "percho",
-          result: PetModel.fromJson(response.data['data']));
+          message: "percho", result: PetModel.fromJson(response.data['data']));
     } catch (e) {
       return ResponseModel(error: true, message: e.toString());
     }
   }
 
-  Future<ResponseModel<List<PetModel>>> getPets() async {
+  Future<ResponseModel<List<PetModel>>> getPets(filters) async {
     try {
-      Response response = await Dio().post("$path/pets");
-
+      Response response = await Dio().post("$path/pets", data: filters);
       return ResponseModel(
           message: "percho",
           result: (response.data as List)
               .map((e) => PetModel.fromJson(e))
               .toList());
     } catch (e) {
+      print(e);
+      return ResponseModel(error: true, message: e.toString());
+    }
+  }
+
+  Future<ResponseModel<PetModel>> getPetsById(id) async {
+    try {
+      Response response = await Dio().get("$path/pets/$id");
+      return ResponseModel(
+          message: "percho", result: PetModel.fromJson(response.data));
+    } catch (e) {
+      print(e);
       return ResponseModel(error: true, message: e.toString());
     }
   }

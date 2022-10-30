@@ -5,8 +5,10 @@ import 'package:adoption_app/app/core/form/form_validators.dart';
 import 'package:adoption_app/app/core/global/global_controller.dart';
 import 'package:adoption_app/app/core/models/response_model.dart';
 import 'package:adoption_app/app/core/models/select_model.dart';
+import 'package:adoption_app/app/core/models/user_model.dart';
 import 'package:adoption_app/app/routes/app_pages.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class RegisterController extends GetxController {
   OauthService oauthService = OauthService();
@@ -32,7 +34,8 @@ class RegisterController extends GetxController {
   FormControl registerForm = FormControl(form: {
     "first_name":
         FormModel(value: '', validators: [FormValidators().isRequired]),
-    "last_name": FormModel(value: '', validators: [FormValidators().isRequired]),
+    "last_name":
+        FormModel(value: '', validators: [FormValidators().isRequired]),
     "email": FormModel(value: '', validators: [FormValidators().isRequired]),
     "password": FormModel(value: '', validators: [FormValidators().isRequired]),
     "password2":
@@ -44,8 +47,7 @@ class RegisterController extends GetxController {
     "city_id": FormModel(value: '', validators: [FormValidators().isRequired]),
     "locality_id":
         FormModel(value: '', validators: [FormValidators().isRequired]),
-    "country_id":
-        FormModel(value: '1', validators: []),
+    "country_id": FormModel(value: '1', validators: []),
   });
 
   register() async {
@@ -56,13 +58,18 @@ class RegisterController extends GetxController {
         return;
       }
 
-      ResponseModel response =
+      ResponseModel<UserModel> response =
           await oauthService.register(registerForm.toJson());
 
       if (response.error) {
         Get.snackbar("Error", response.message!);
         return;
       }
+
+      Box<UserModel> box = Hive.box<UserModel>('user');
+      box.clear();
+
+      await box.add(response.result!);
 
       Get.offAllNamed(AppRoutes.main);
     }

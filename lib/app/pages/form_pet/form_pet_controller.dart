@@ -24,6 +24,7 @@ class FormPetsController extends GetxController {
 
   List<SelectModel> breeds = [];
   RxList images = [].obs;
+  RxBool loading = false.obs;
 
   FormControl petsForm = FormControl(form: {
     'name': FormModel(value: "", validators: [FormValidators().isRequired]),
@@ -73,6 +74,8 @@ class FormPetsController extends GetxController {
   }
 
   createPet() async {
+    loading.value = true;
+
     petsForm.form["user_id"]!.value =
         globalController.user.getAt(0)!.id.toString();
     if (petsForm.validate() && images.isNotEmpty) {
@@ -86,12 +89,13 @@ class FormPetsController extends GetxController {
       ResponseModel response =
           await petsServices.createPet(petImages, petsForm.getValues());
 
+      loading.value = false;
       if (response.error) {
         Get.snackbar('error', response.message!);
         return;
       }
 
-      Get.offAllNamed(AppRoutes.main);
+      Get.back();
     }
   }
 

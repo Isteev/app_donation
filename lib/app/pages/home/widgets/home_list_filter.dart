@@ -1,3 +1,4 @@
+import 'package:adoption_app/app/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/state_manager.dart';
@@ -9,29 +10,38 @@ class HomeListFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RxInt selected = RxInt(0);
-
-    return Obx(() {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          FilterItem(
-            label: "todos",
-            selected: selected.value == 0,
-            onTap: () => selected.value = 0,
-          ),
-          FilterItem(
-            label: "perros",
-            selected: selected.value == 1,
-            onTap: () => selected.value = 1,
-          ),
-          FilterItem(
-            label: "gatos",
-            selected: selected.value == 2,
-            onTap: () => selected.value = 2,
-          ),
-        ],
-      );
+    return GetBuilder<HomeController>(builder: (_) {
+      return Obx(() {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            FilterItem(
+              label: "todos",
+              selected: _.type.value == 0,
+              onTap: () {
+                _.type.value = 0;
+                _.getPets();
+              },
+            ),
+            FilterItem(
+              label: "perros",
+              selected: _.type.value == 1,
+              onTap: () {
+                _.type.value = 1;
+                _.getPets();
+              },
+            ),
+            FilterItem(
+              label: "gatos",
+              selected: _.type.value == 2,
+              onTap: () {
+                _.type.value = 2;
+                _.getPets();
+              },
+            ),
+          ],
+        );
+      });
     });
   }
 }

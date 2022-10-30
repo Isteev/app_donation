@@ -9,7 +9,8 @@ class HomeController extends GetxController {
   PetsServices petsServices = PetsServices();
 
   List<PetModel> pets = [];
-  bool loading = true;
+  RxBool loading = true.obs;
+  RxInt type = 0.obs;
 
   @override
   void onInit() {
@@ -18,13 +19,14 @@ class HomeController extends GetxController {
   }
 
   getPets() async {
-    ResponseModel<List<PetModel>> response = await petsServices.getPets();
+    loading.value = true;
+    ResponseModel<List<PetModel>> response =
+        await petsServices.getPets({'type': type > 0 ? type.value : null});
 
     if (response.message == "percho") {
       pets = response.result!;
     }
 
-    loading = false;
-    update(['pets']);
+    loading.value = false;
   }
 }

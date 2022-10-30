@@ -4,6 +4,6 @@ import 'package:get/instance_manager.dart';
 class ProfileBindigs implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<PRofileController>(() => PRofileController());
+    Get.lazyPut<ProfileController>(() => ProfileController());
   }
 }

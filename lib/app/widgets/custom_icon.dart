@@ -5,13 +5,20 @@ import 'package:get/get.dart';
 class CustomIcon extends StatelessWidget {
   const CustomIcon({
     Key? key,
+    this.onTap,
   }) : super(key: key);
+
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.back();
+        if (onTap != null) {
+          onTap!();
+        } else {
+          Get.back();
+        }
       },
       child: Container(
           padding: const EdgeInsets.only(right: 20, top: 20, bottom: 20).r,

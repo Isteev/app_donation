@@ -40,14 +40,24 @@ class PetModel {
         name: json["name"],
         age: json["age"],
         gender: json["gender"],
-        weight: json["weight"],
+        weight: json["weight"] is int
+            ? json["weight"]
+            : int.tryParse(json["weight"]) ?? 0,
         status: json["status"],
         adoptionStatus: json["adoption_status"],
-        breedId: json["breed_id"],
-        userId: json["user_id"],
-        petTypeId: json["pet_type_id"],
-        petImages: List<PetImage>.from(
-            json["pet_images"].map((x) => PetImage.fromJson(x))),
+        breedId: json["breed_id"] is int
+            ? json["breed_id"]
+            : int.tryParse(json["breed_id"]) ?? 0,
+        userId: json["user_id"] is int
+            ? json["user_id"]
+            : int.tryParse(json["user_id"]) ?? 0,
+        petTypeId: json["pet_type_id"] is int
+            ? json["pet_type_id"]
+            : int.tryParse(json["pet_type_id"]) ?? 0,
+        petImages: json["pet_images"] != null
+            ? List<PetImage>.from(
+                json["pet_images"].map((x) => PetImage.fromJson(x)))
+            : [],
       );
 
   Map<String, dynamic> toJson() => {

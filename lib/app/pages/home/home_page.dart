@@ -28,14 +28,14 @@ class HomePage extends StatelessWidget {
                     child: SingleChildScrollView(
                       child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 80).r,
-                          child: Builder(builder: (context) {
-                            if (_.loading) {
+                          child: Obx(() {
+                            if (_.loading.value) {
                               return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
 
-                            if (_.pets.isEmpty && !_.loading) {
+                            if (_.pets.isEmpty && !_.loading.value) {
                               return Text("error");
                             }
 
@@ -51,7 +51,7 @@ class HomePage extends StatelessWidget {
                             );
                           })),
                     ),
-                  ),
+                  )
                 ],
               );
             }),

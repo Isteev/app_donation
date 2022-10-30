@@ -35,7 +35,7 @@ class NavBar extends StatelessWidget {
         children: [
           GestureDetector(
               onTap: () {
-                Get.toNamed(AppRoutes.home, id: 12);
+                Get.offNamed(AppRoutes.home, id: 12);
               },
               child: Text('home')),
           Text('pets'),

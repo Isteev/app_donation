@@ -33,7 +33,9 @@ class FormPets extends StatelessWidget {
                       fontWeight: FontWeight.w600),
                 ),
                 50.verticalSpace,
-                AddImagesFormPet(controller: _,),
+                AddImagesFormPet(
+                  controller: _,
+                ),
                 40.verticalSpace,
                 FormBuilder(
                     formControl: _.petsForm,
@@ -96,6 +98,7 @@ class FormPets extends StatelessWidget {
                 const Spacer(),
                 CustomButton(
                     label: "Agregar",
+                    loading: _.loading,
                     onTap: () {
                       _.createPet();
                     }),
@@ -111,7 +114,8 @@ class FormPets extends StatelessWidget {
 
 class AddImagesFormPet extends StatelessWidget {
   const AddImagesFormPet({
-    Key? key, required this.controller,
+    Key? key,
+    required this.controller,
   }) : super(key: key);
 
   final FormPetsController controller;

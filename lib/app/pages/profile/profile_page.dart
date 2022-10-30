@@ -1,3 +1,4 @@
+import 'package:adoption_app/app/pages/profile/profile_controller.dart';
 import 'package:adoption_app/app/routes/app_pages.dart';
 import 'package:adoption_app/app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -13,19 +14,27 @@ class ProfilePage extends StatelessWidget {
       body: Container(
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.symmetric(horizontal: 100).r,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Profle'),
-            40.verticalSpace,
-            CustomButton(
-                label: "Agregar Mascota",
-                onTap: () {
-                  Get.toNamed(AppRoutes.formPets);
-                })
-          ],
-        ),
+        child: GetBuilder<ProfileController>(builder: (_) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Profle'),
+              40.verticalSpace,
+              CustomButton(
+                  label: "Agregar Mascota",
+                  onTap: () {
+                    Get.toNamed(AppRoutes.formPets);
+                  }),
+              30.verticalSpace,
+              CustomButton(
+                  label: "Cerrar Sesion",
+                  onTap: () {
+                    _.logOut();
+                  })
+            ],
+          );
+        }),
       ),
     );
   }
